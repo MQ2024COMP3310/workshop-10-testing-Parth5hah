@@ -36,7 +36,9 @@ class TestWebApp(unittest.TestCase):
 
     def test_no_access_to_profile(self):
         # TODO: Check that non-logged-in user should be redirected to /login
-        assert False
+        response = self.client.get('/profile', follow_redirects=True)
+        assert response.status_code == 200
+        assert '/login' in response.request.path
 
     def test_register_user(self):
         response = self.client.post('/signup', data = {
